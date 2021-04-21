@@ -30,6 +30,6 @@ app.use((req, res, next) => {
 app.use(articleAPI);
 app.use(sourceAPI);
 
-app.listen(5000, () => {
+app.listen(8050, () => {
   console.log("Server started successfully on port" + 5000);
 });
