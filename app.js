@@ -31,5 +31,5 @@ app.use(articleAPI);
 app.use(sourceAPI);
 
 app.listen(8050, () => {
-  console.log("Server started successfully on port" + 5000);
+  console.log("Server started successfully on port " + 8050);
 });

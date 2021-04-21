@@ -21,3 +21,12 @@ exports.getIdsOfArticlesForSourceCategoryFromDB = async (
 
   return articles;
 };
+
+exports.getArticlesFromDB = async (ITEMS_PER_PAGE, PAGE, FILTER) => {
+  const filter = FILTER || {};
+  const articles = await Article.find(filter)
+    .skip((PAGE - 1) * ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE);
+  console.log(articles);
+  return articles;
+};

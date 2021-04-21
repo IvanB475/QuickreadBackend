@@ -50,3 +50,19 @@ exports.getIdsOfArticlesForSourceCategory = async (req, res, next) => {
     res.status(400).json({ message: "something went wrong" });
   }
 };
+
+exports.getAllArticles = async (req, res, next) => {
+  const ITEMS_PER_PAGE = 10;
+  const PAGE = req.query.page || 1;
+  const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE);
+  res.status(200).json({ message: "OK", articles });
+};
+
+exports.getAllArticlesFromSource = async (req, res, next) => {
+  const ITEMS_PER_PAGE = +req.query.items || 10;
+  const PAGE = +req.query.page || 1;
+  const idSource = req.body?.idSource;
+  const FILTER = { idSource };
+  const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
+  res.status(200).json({ message: "OK", idSource, articles });
+};
