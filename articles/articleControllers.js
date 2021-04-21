@@ -1,17 +1,7 @@
 const db = require("./articleDB");
 
 exports.addArticle = async (req, res, next) => {
-  const idUrl = req.body?.idUrl;
-  const source = req.body?.source;
-  const idSource = req.body?.idSource;
-  const category = req.body?.category;
-  const title = req.body?.title;
-  const imageUrl = req.body?.imageUrl;
-  const publishDate = req.body?.publishDate;
-  const author = req.body?.author;
-  const summary = req.body?.summary;
-
-  const article = {
+  const article = ({
     idUrl,
     source,
     idSource,
@@ -21,7 +11,7 @@ exports.addArticle = async (req, res, next) => {
     publishDate,
     author,
     summary,
-  };
+  } = req.body);
 
   const checkifErrors = await db.saveArticle(article);
 

@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const articleAPI = require("./articles/articleAPI");
 const sourceAPI = require("./sources/sourceAPI");
+require("dotenv").config();
 
 app.use(express.json());
 
