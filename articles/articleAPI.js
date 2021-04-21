@@ -8,7 +8,11 @@ router
     articleController.getIdsOfArticlesForSourceCategory
   )
   .get("/getAllArticles", articleController.getAllArticles)
-  .get("/getAllArticlesFromSource", articleController.getAllArticlesFromSource);
+  .get("/getAllArticlesFromSource", articleController.getAllArticlesFromSource)
+  .get(
+    "/getAllArticlesFromSourceCategory",
+    articleController.getAllArticlesFromSourceCategory
+  );
 
 router.post("/addArticle", articleController.addArticle);
 

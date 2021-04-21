@@ -66,3 +66,13 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
   const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
   res.status(200).json({ message: "OK", idSource, articles });
 };
+
+exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
+  const ITEMS_PER_PAGE = +req.query.items || 10;
+  const PAGE = +req.query.page || 1;
+  const idSource = req.body?.idSource;
+  const category = req.body?.category;
+  const FILTER = { idSource, category };
+  const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
+  res.status(200).json({ message: "OK", idSource, articles });
+};
