@@ -15,4 +15,10 @@ router.post(
   sourceController.addSource
 );
 
+router.put(
+  "/updateSource",
+  authHeader.validateUserThroughHeader,
+  sourceController.updateSource
+);
+
 module.exports = router;

@@ -17,3 +17,16 @@ exports.addSourceToDB = async (source) => {
     return 0;
   }
 };
+
+exports.updateSourceInDB = async (source) => {
+  const { name, idSource, sourceImage, category } = source;
+  try {
+    const foundSource = await Source.findOne({ idSource });
+    foundSource.name = name || foundSource.name;
+    foundSource.sourceImage = sourceImage || foundSource.sourceImage;
+    foundSource.category = category || foundSource.category;
+    await foundSource.save();
+  } catch (e) {
+    return 0;
+  }
+};

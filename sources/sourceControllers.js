@@ -29,3 +29,14 @@ exports.addSource = async (req, res, next) => {
     res.status(201).json({ message: "Source added successfully", source });
   }
 };
+
+exports.updateSource = async (req, res, next) => {
+  const source = ({ name, idSource, sourceImage, category } = req.body);
+
+  const checkIfErrors = await sourceDB.updateSourceInDB(source);
+  if (checkIfErrors === 0) {
+    res.status(400).json({ message: "something went wrong" });
+  } else {
+    res.status(200).json({ message: "updated successfully" });
+  }
+};
