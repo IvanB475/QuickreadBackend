@@ -52,8 +52,8 @@ exports.getIdsOfArticlesForSourceCategory = async (req, res, next) => {
 };
 
 exports.getAllArticles = async (req, res, next) => {
-  const ITEMS_PER_PAGE = 10;
-  const PAGE = req.query.page || 1;
+  const ITEMS_PER_PAGE = +req.query.items || 10;
+  const PAGE = +req.query.page || 1;
   const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE);
   res.status(200).json({ message: "OK", articles });
 };
@@ -62,9 +62,15 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
   const idSource = req.body?.idSource;
-  const FILTER = { idSource };
-  const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
-  res.status(200).json({ message: "OK", idSource, articles });
+  if (!idSource) {
+    res.status(400).json({
+      message: "something went wrong, make sure to input all required data",
+    });
+  } else {
+    const FILTER = { idSource };
+    const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
+    res.status(200).json({ message: "OK", idSource, articles });
+  }
 };
 
 exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
@@ -72,7 +78,13 @@ exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
   const PAGE = +req.query.page || 1;
   const idSource = req.body?.idSource;
   const category = req.body?.category;
-  const FILTER = { idSource, category };
-  const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
-  res.status(200).json({ message: "OK", idSource, articles });
+  if (!idSource || !category) {
+    res.status(400).json({
+      message: "something went wrong, make sure to input all required data",
+    });
+  } else {
+    const FILTER = { idSource, category };
+    const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
+    res.status(200).json({ message: "OK", idSource, articles });
+  }
 };

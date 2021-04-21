@@ -6,7 +6,7 @@ const sourceAPI = require("./sources/sourceAPI");
 
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/kidsoh_database", {
+mongoose.connect("mongodb://localhost:27017/article_DB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
