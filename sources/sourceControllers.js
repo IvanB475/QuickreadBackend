@@ -1,7 +1,7 @@
 const sourceDB = require("./sourceDB");
 
 exports.getSources = async (req, res, next) => {
-  const sources = sourceDB.getSourcesFromDB;
+  const sources = sourceDB.getSourcesFromDB();
   if (sources === 0) {
     res.status(400).json({ message: "something went wrong" });
   } else {

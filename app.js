@@ -7,7 +7,7 @@ require("dotenv").config();
 const helmet = require("helmet");
 
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 app.disable("x-powered-by");
 app.use(helmet());
 
