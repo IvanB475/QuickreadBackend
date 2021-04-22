@@ -20,6 +20,7 @@ sourceSchema.methods.toJSON = function () {
   const sourceObject = source.toObject();
 
   delete sourceObject._id;
+  delete sourceObject.__v;
 
   return sourceObject;
 };
