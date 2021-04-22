@@ -4,10 +4,11 @@ const Schema = mongoose.Schema;
 const sourceSchema = new Schema({
   name: { type: String, required: true, unique: true },
   idSource: { type: String, required: true, unique: true },
-  sourceImage: { type: String, unique: true },
+  sourceImage: { type: String, unique: false },
   category: [
     {
-      name: { type: String, required: true, unique: true },
+      _id: false,
+      name: { type: String, required: true, unique: false },
       href: { type: String, required: true },
       path: { type: String, required: true },
     },

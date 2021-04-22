@@ -14,6 +14,7 @@ exports.addSourceToDB = async (source) => {
   try {
     await newSource.save();
   } catch (e) {
+    console.log(e);
     return 0;
   }
 };
