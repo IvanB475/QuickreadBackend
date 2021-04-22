@@ -15,5 +15,14 @@ const sourceSchema = new Schema({
   ],
 });
 
+sourceSchema.methods.toJSON = function () {
+  const source = this;
+  const sourceObject = source.toObject();
+
+  delete sourceObject._id;
+
+  return sourceObject;
+};
+
 const source = mongoose.model("Source", sourceSchema);
 module.exports = source;
