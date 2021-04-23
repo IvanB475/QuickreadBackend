@@ -3,7 +3,6 @@ const db = require("./articleDB");
 exports.addArticle = async (req, res, next) => {
   const article = ({
     idUrl,
-    source,
     idSource,
     category,
     title,
@@ -35,7 +34,7 @@ exports.getIdsOfArticlesForSourceCategory = async (req, res, next) => {
     articles.forEach((article) => {
       articleIDs.push(article.idUrl);
     });
-    res.status(200).json({ message: "Fetched articleIDs", articleIDs });
+    res.status(200).json({ articleIDs });
   } catch (e) {
     res.status(400).json({ message: "something went wrong" });
   }
@@ -59,7 +58,7 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
   } else {
     const FILTER = { idSource };
     const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
-    res.status(200).json({ message: "OK", idSource, articles });
+    res.status(200).json({ articles });
   }
 };
 
@@ -75,6 +74,6 @@ exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
   } else {
     const FILTER = { idSource, category };
     const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
-    res.status(200).json({ message: "OK", idSource, articles });
+    res.status(200).json({ articles });
   }
 };

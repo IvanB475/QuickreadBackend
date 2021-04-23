@@ -5,7 +5,7 @@ exports.getSources = async (req, res, next) => {
   if (sources === 0) {
     res.status(400).json({ message: "something went wrong" });
   } else {
-    res.status(200).json({ message: "Returning all sources", sources });
+    res.status(200).json({ sources });
   }
 };
 
@@ -26,7 +26,7 @@ exports.addSource = async (req, res, next) => {
   if (checkifErrors === 0) {
     res.status(404).json({ message: "something went wrong" });
   } else {
-    res.status(201).json({ message: "Source added successfully", source });
+    res.status(201).json({ source });
   }
 };
 
