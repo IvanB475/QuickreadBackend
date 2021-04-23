@@ -13,11 +13,14 @@ exports.addArticle = async (req, res, next) => {
   } = req.body);
 
   const checkifErrors = await db.saveArticle(article);
-
-  if (checkifErrors === 0) {
-    res.status(400).json({ message: "Article couldn't be added" });
+  if (checkifErrors !== undefined) {
+    if (checkifErrors.code === 11000) {
+      res.status(400).json({ message: "Article with that id already exists" });
+    } else {
+      res.status(400).json({ message: "something went wrong" });
+    }
   } else {
-    res.status(201).json({ message: "Article was added" });
+    res.status(201).json({ message: "Article was added", checkifErrors });
   }
 };
 
@@ -44,7 +47,7 @@ exports.getAllArticles = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
   const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE);
-  res.status(200).json({ message: "OK", articles });
+  res.status(200).json({ articles });
 };
 
 exports.getAllArticlesFromSource = async (req, res, next) => {

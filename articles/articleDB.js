@@ -4,9 +4,8 @@ exports.saveArticle = async (article) => {
   const newArticle = new Article(article);
   try {
     await newArticle.save();
-    console.log("Article added successfully");
   } catch (e) {
-    return 0;
+    return e;
   }
 };
 
