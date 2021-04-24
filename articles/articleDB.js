@@ -17,8 +17,29 @@ exports.getIdsOfArticlesForSourceCategoryFromDB = async (
     idSource,
     category,
   });
-
   return articles;
+};
+
+exports.addCategoryToArticle = async (idUrl, newCategory) => {
+  const article = await Article.findOne({ idUrl });
+  let quit = false;
+  try {
+    article.category.forEach((category) => {
+      if (category == newCategory) {
+        console.log("matching");
+        quit = true;
+      }
+    });
+    if (quit) {
+      return 0;
+    }
+    await article.category.push(newCategory);
+    article.save();
+    return newCategory;
+  } catch (e) {
+    console.log(e);
+    return 0;
+  }
 };
 
 exports.getArticlesFromDB = async (ITEMS_PER_PAGE, PAGE, FILTER) => {
@@ -26,6 +47,13 @@ exports.getArticlesFromDB = async (ITEMS_PER_PAGE, PAGE, FILTER) => {
   const articles = await Article.find(filter)
     .skip((PAGE - 1) * ITEMS_PER_PAGE)
     .limit(ITEMS_PER_PAGE);
-  console.log(articles);
+
+  articles.forEach((article) => {
+    let category = article.category;
+
+    article.category = category;
+    article.save();
+  });
+
   return articles;
 };

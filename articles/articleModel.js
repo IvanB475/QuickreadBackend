@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const articleSchema = new Schema({
   idUrl: { type: String, required: true, unique: true },
   idSource: { type: String, required: true },
-  category: { type: String, required: true },
+  category: [{ type: String, required: true }],
   title: { type: String, required: true },
   imageUrl: { type: String },
   publishDate: { type: String },

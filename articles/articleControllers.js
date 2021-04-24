@@ -15,12 +15,16 @@ exports.addArticle = async (req, res, next) => {
   const checkifErrors = await db.saveArticle(article);
   if (checkifErrors !== undefined) {
     if (checkifErrors.code === 11000) {
-      res.status(400).json({ message: "Article with that id already exists" });
+      const newCategory = await db.addCategoryToArticle(idUrl, category);
+      res.status(400).json({
+        message: "Article with that id already exists, category added",
+        addedCategory: newCategory,
+      });
     } else {
       res.status(400).json({ message: "something went wrong" });
     }
   } else {
-    res.status(201).json({ message: "Article was added", checkifErrors });
+    res.status(201).json({ message: "Article was added" });
   }
 };
 
