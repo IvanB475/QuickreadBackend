@@ -48,12 +48,5 @@ exports.getArticlesFromDB = async (ITEMS_PER_PAGE, PAGE, FILTER) => {
     .skip((PAGE - 1) * ITEMS_PER_PAGE)
     .limit(ITEMS_PER_PAGE);
 
-  articles.forEach((article) => {
-    let category = article.category;
-
-    article.category = category;
-    article.save();
-  });
-
   return articles;
 };
