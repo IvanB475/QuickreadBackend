@@ -9,6 +9,8 @@ router.get(
   sourceController.getSources
 );
 
+router.get("/getAllCategories", sourceController.getAllCategories);
+
 router.post(
   "/addSource",
   authHeader.validateUserThroughHeader,

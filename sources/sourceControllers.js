@@ -40,3 +40,17 @@ exports.updateSource = async (req, res, next) => {
     res.status(200).json({ message: "updated successfully" });
   }
 };
+
+exports.getAllCategories = async (req, res, next) => {
+  const sources = await sourceDB.getSourcesFromDB();
+  const arrOfCategories = [];
+
+  sources.forEach((source) => {
+    source.category.forEach((category) => {
+      if (!arrOfCategories.includes(category.name))
+        arrOfCategories.push(category.name);
+    });
+  });
+
+  res.status(200).json({ categoryList: arrOfCategories });
+};
