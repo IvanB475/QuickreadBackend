@@ -14,6 +14,10 @@ router
   .get(
     "/getAllArticlesFromSourceCategory",
     articleController.getAllArticlesFromSourceCategory
+  )
+  .get(
+    "/getAllArticlesForCategory",
+    articleController.getAllArticlesForCategory
   );
 
 router.post(

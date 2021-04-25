@@ -44,9 +44,10 @@ exports.addCategoryToArticle = async (idUrl, newCategory) => {
 
 exports.getArticlesFromDB = async (ITEMS_PER_PAGE, PAGE, FILTER) => {
   const filter = FILTER || {};
+  const articleCount = await Article.find(filter).countDocuments();
   const articles = await Article.find(filter)
     .skip((PAGE - 1) * ITEMS_PER_PAGE)
     .limit(ITEMS_PER_PAGE);
 
-  return articles;
+  return { articles, articleCount };
 };

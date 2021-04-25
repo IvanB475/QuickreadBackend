@@ -1,4 +1,5 @@
 const db = require("./articleDB");
+const utils = require("./utils/getTotalPages");
 
 exports.addArticle = async (req, res, next) => {
   const article = ({
@@ -50,7 +51,11 @@ exports.getIdsOfArticlesForSourceCategory = async (req, res, next) => {
 exports.getAllArticles = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
-  const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE);
+  const { articles, articleCount } = await db.getArticlesFromDB(
+    ITEMS_PER_PAGE,
+    PAGE
+  );
+  const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
   res.status(200).json({ articles });
 };
 
@@ -64,7 +69,12 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
     });
   } else {
     const FILTER = { idSource };
-    const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
+    const { articles, articleCount } = await db.getArticlesFromDB(
+      ITEMS_PER_PAGE,
+      PAGE,
+      FILTER
+    );
+    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
     res.status(200).json({ articles });
   }
 };
@@ -80,7 +90,32 @@ exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
     });
   } else {
     const FILTER = { idSource, category };
-    const articles = await db.getArticlesFromDB(ITEMS_PER_PAGE, PAGE, FILTER);
+    const { articles, articleCount } = await db.getArticlesFromDB(
+      ITEMS_PER_PAGE,
+      PAGE,
+      FILTER
+    );
+    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+    res.status(200).json({ articles });
+  }
+};
+
+exports.getAllArticlesForCategory = async (req, res, next) => {
+  const ITEMS_PER_PAGE = +req.query.items || 10;
+  const PAGE = +req.query.page || 1;
+  const category = req.body?.category;
+  if (!category) {
+    res.status(400).json({
+      message: "something went wrong, make sure to input all required data",
+    });
+  } else {
+    const FILTER = { category };
+    const { articles, articleCount } = await db.getArticlesFromDB(
+      ITEMS_PER_PAGE,
+      PAGE,
+      FILTER
+    );
+    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
     res.status(200).json({ articles });
   }
 };
