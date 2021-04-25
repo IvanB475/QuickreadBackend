@@ -51,17 +51,23 @@ exports.getIdsOfArticlesForSourceCategory = async (req, res, next) => {
 exports.getAllArticles = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
+  const getTotalPages = req.query.getTotalPages || false;
   const { articles, articleCount } = await db.getArticlesFromDB(
     ITEMS_PER_PAGE,
     PAGE
   );
-  const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
-  res.status(200).json({ articles });
+  if (getTotalPages) {
+    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+    res.status(200).json({ articles, totalPages });
+  } else {
+    res.status(200).json({ articles });
+  }
 };
 
 exports.getAllArticlesFromSource = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
+  const getTotalPages = req.query.getTotalPages || false;
   const idSource = req.body?.idSource;
   if (!idSource) {
     res.status(400).json({
@@ -74,14 +80,19 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
       PAGE,
       FILTER
     );
-    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
-    res.status(200).json({ articles });
+    if (getTotalPages) {
+      const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+      res.status(200).json({ articles, totalPages });
+    } else {
+      res.status(200).json({ articles });
+    }
   }
 };
 
 exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
+  const getTotalPages = req.query.getTotalPages || false;
   const idSource = req.body?.idSource;
   const category = req.body?.category;
   if (!idSource || !category) {
@@ -95,14 +106,19 @@ exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
       PAGE,
       FILTER
     );
-    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
-    res.status(200).json({ articles });
+    if (getTotalPages) {
+      const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+      res.status(200).json({ articles, totalPages });
+    } else {
+      res.status(200).json({ articles });
+    }
   }
 };
 
 exports.getAllArticlesForCategory = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
+  const getTotalPages = req.query.getTotalPages || false;
   const category = req.body?.category;
   if (!category) {
     res.status(400).json({
@@ -115,7 +131,11 @@ exports.getAllArticlesForCategory = async (req, res, next) => {
       PAGE,
       FILTER
     );
-    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
-    res.status(200).json({ articles });
+    if (getTotalPages) {
+      const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+      res.status(200).json({ articles, totalPages });
+    } else {
+      res.status(200).json({ articles });
+    }
   }
 };
