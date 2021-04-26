@@ -1,11 +1,25 @@
 const sourceDB = require("./sourceDB");
+const source = require("./sourceModel");
+
+exports.getAllSources = async (req, res, next) => {
+  const sources = await sourceDB.getSourcesFromDB();
+  if (sources === 0) {
+    res.status(400).json({ message: "something went wrong" });
+  } else {
+    res.status(200).json({ sources });
+  }
+};
 
 exports.getSources = async (req, res, next) => {
   const sources = await sourceDB.getSourcesFromDB();
   if (sources === 0) {
     res.status(400).json({ message: "something went wrong" });
   } else {
-    res.status(200).json({ sources });
+    const allSources = [];
+    sources.forEach((source) => {
+      allSources.push(source.idSource);
+    });
+    res.status(200).json({ sources: allSources });
   }
 };
 

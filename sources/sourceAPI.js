@@ -6,8 +6,10 @@ const authHeader = require("../middleware/authHeader");
 router.get(
   "/getAllSources",
   authHeader.validateUserThroughHeader,
-  sourceController.getSources
+  sourceController.getAllSources
 );
+
+router.get("/getSources", sourceController.getSources);
 
 router.get("/getAllCategories", sourceController.getAllCategories);
 
