@@ -1,5 +1,4 @@
 const sourceDB = require("./sourceDB");
-const source = require("./sourceModel");
 
 exports.getAllSources = async (req, res, next) => {
   const sources = await sourceDB.getSourcesFromDB();

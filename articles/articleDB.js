@@ -32,10 +32,11 @@ exports.addCategoryToArticle = async (idUrl, newCategory) => {
     });
     if (quit) {
       return 0;
+    } else {
+      await article.category.push(newCategory);
+      article.save();
+      return newCategory;
     }
-    await article.category.push(newCategory);
-    article.save();
-    return newCategory;
   } catch (e) {
     console.log(e);
     return 0;
