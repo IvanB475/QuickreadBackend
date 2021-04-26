@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const sourceController = require("./sourceControllers");
 const authHeader = require("../middleware/authHeader");
+const authToken = require("../middleware/authToken");
 
 router.get(
   "/getAllSources",
@@ -9,9 +10,13 @@ router.get(
   sourceController.getAllSources
 );
 
-router.get("/getSources", sourceController.getSources);
+router.get("/getSources", authToken.validateToken, sourceController.getSources);
 
-router.get("/getAllCategories", sourceController.getAllCategories);
+router.get(
+  "/getAllCategories",
+  authToken.validateToken,
+  sourceController.getAllCategories
+);
 
 router.post(
   "/addSource",
