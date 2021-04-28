@@ -57,7 +57,7 @@ exports.getAllArticles = async (req, res, next) => {
     PAGE
   );
   if (getTotalPages) {
-    const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+    const totalPages = await utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
     res.status(200).json({ articles, totalPages });
   } else {
     res.status(200).json({ articles });
@@ -81,7 +81,10 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
       FILTER
     );
     if (getTotalPages) {
-      const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+      const totalPages = await utils.getTotalPages(
+        articleCount,
+        ITEMS_PER_PAGE
+      );
       res.status(200).json({ articles, totalPages });
     } else {
       res.status(200).json({ articles });
@@ -107,7 +110,10 @@ exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
       FILTER
     );
     if (getTotalPages) {
-      const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+      const totalPages = await utils.getTotalPages(
+        articleCount,
+        ITEMS_PER_PAGE
+      );
       res.status(200).json({ articles, totalPages });
     } else {
       res.status(200).json({ articles });
@@ -132,7 +138,10 @@ exports.getAllArticlesForCategory = async (req, res, next) => {
       FILTER
     );
     if (getTotalPages) {
-      const totalPages = utils.getTotalPages(articleCount, ITEMS_PER_PAGE);
+      const totalPages = await utils.getTotalPages(
+        articleCount,
+        ITEMS_PER_PAGE
+      );
       res.status(200).json({ articles, totalPages });
     } else {
       res.status(200).json({ articles });
