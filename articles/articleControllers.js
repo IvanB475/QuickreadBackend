@@ -30,8 +30,8 @@ exports.addArticle = async (req, res, next) => {
 };
 
 exports.getIdsOfArticlesForSourceCategory = async (req, res, next) => {
-  const idSource = req.body?.idSource;
-  const category = req.body?.category;
+  const idSource = req.query?.idSource;
+  const category = req.query?.category;
   const articleIDs = [];
 
   try {
@@ -68,7 +68,7 @@ exports.getAllArticlesFromSource = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
   const getTotalPages = req.query.getTotalPages || false;
-  const idSource = req.body?.idSource;
+  const idSource = req.query.idSource;
   if (!idSource) {
     res.status(400).json({
       message: "something went wrong, make sure to input all required data",
@@ -93,8 +93,8 @@ exports.getAllArticlesFromSourceCategory = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
   const getTotalPages = req.query.getTotalPages || false;
-  const idSource = req.body?.idSource;
-  const category = req.body?.category;
+  const idSource = req.query.idSource;
+  const category = req.query.category;
   if (!idSource || !category) {
     res.status(400).json({
       message: "something went wrong, make sure to input all required data",
@@ -119,7 +119,7 @@ exports.getAllArticlesForCategory = async (req, res, next) => {
   const ITEMS_PER_PAGE = +req.query.items || 10;
   const PAGE = +req.query.page || 1;
   const getTotalPages = req.query.getTotalPages || false;
-  const category = req.body?.category;
+  const category = req.query.category;
   if (!category) {
     res.status(400).json({
       message: "something went wrong, make sure to input all required data",
