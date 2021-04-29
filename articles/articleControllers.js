@@ -148,3 +148,34 @@ exports.getAllArticlesForCategory = async (req, res, next) => {
     }
   }
 };
+
+exports.deleteOldArticles = async (req, res, next) => {
+  const daysAgo = req.body?.daysAgo || 5;
+  const today = new Date();
+  const beforeDay = new Date(today.setDate(today.getDate() - daysAgo));
+  const filter = { insertionDate: { $lte: beforeDay } };
+  try {
+    const deletedDocuments = await db.deleteOldArticlesFromDB(filter);
+    res.status(200).json({ deletedDocuments });
+  } catch (e) {
+    res.status(400).json({ message: "something went wrong" });
+  }
+};
+
+exports.deleteArticle = async (req, res, next) => {
+  const idUrl = req.body.idUrl;
+  if (!idUrl) {
+    res.status(400).json({ message: "nothing for you to delete here" });
+  } else {
+    try {
+      const deletedArticle = await db.deleteArticleFromDB(idUrl);
+      if (!deletedArticle) {
+        res.status(400).json({ message: "article with that id doesn't exist" });
+      } else {
+        res.status(200).json({ message: "successfully deleted" });
+      }
+    } catch (e) {
+      res.status(400).json({ message: "something went wrong" });
+    }
+  }
+};

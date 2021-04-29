@@ -53,3 +53,22 @@ exports.getArticlesFromDB = async (ITEMS_PER_PAGE, PAGE, FILTER) => {
 
   return { articles, articleCount };
 };
+
+exports.deleteOldArticlesFromDB = async (FILTER) => {
+  const filter = FILTER || {};
+  try {
+    const articlesToDelete = await Article.deleteMany(filter);
+    return articlesToDelete.deletedCount;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+exports.deleteArticleFromDB = async (idUrl) => {
+  try {
+    const articleToDelete = await Article.findOneAndDelete({ idUrl: idUrl });
+    return articleToDelete;
+  } catch (e) {
+    throw new Error(e);
+  }
+};

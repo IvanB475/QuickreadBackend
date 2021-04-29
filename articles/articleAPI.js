@@ -37,4 +37,8 @@ router.post(
   articleController.addArticle
 );
 
+router
+  .delete("/deleteArticle", articleController.deleteArticle)
+  .delete("/deleteOldArticles", articleController.deleteOldArticles);
+
 module.exports = router;
