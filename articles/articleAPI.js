@@ -38,7 +38,15 @@ router.post(
 );
 
 router
-  .delete("/deleteArticle", articleController.deleteArticle)
-  .delete("/deleteOldArticles", articleController.deleteOldArticles);
+  .delete(
+    "/deleteArticle",
+    authHeader.validateUserThroughHeader,
+    articleController.deleteArticle
+  )
+  .delete(
+    "/deleteOldArticles",
+    authHeader.validateUserThroughHeader,
+    articleController.deleteOldArticles
+  );
 
 module.exports = router;
