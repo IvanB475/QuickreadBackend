@@ -74,10 +74,10 @@ exports.deleteArticleFromDB = async (idUrl) => {
   }
 };
 
-const automatedDeletion = schedule.scheduleJob("58 * * * *", () => {
+const automatedDeletion = schedule.scheduleJob("20 * * * *", () => {
   console.log("job was hit");
   Article.deleteMany({
-    publishDate: {
+    insertionDate: {
       $lt: new Date(Date.now() - 1000 * 60 * 60 * 144),
     },
   }).then((article) => {

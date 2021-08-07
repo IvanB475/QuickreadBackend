@@ -8,7 +8,7 @@ const articleSchema = new Schema({
   title: { type: String, required: true, unique: true },
   imageUrl: { type: String },
   publishDate: { type: String },
-  insertionDate: { type: Date, Default: Date.now },
+  insertionDate: { type: Date, required: true, default: Date.now },
   author: { type: String },
   summary: { type: String, required: true },
 });
