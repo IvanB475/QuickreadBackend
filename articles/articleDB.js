@@ -1,4 +1,5 @@
 const Article = require("./articleModel");
+const schedule = require("node-schedule");
 
 exports.saveArticle = async (article) => {
   const newArticle = new Article(article);
@@ -72,3 +73,16 @@ exports.deleteArticleFromDB = async (idUrl) => {
     throw new Error(e);
   }
 };
+
+const automatedDeletion = schedule.scheduleJob("58 * * * *", () => {
+  console.log("job was hit");
+  Article.deleteMany({
+    publishDate: {
+      $lt: new Date(Date.now() - 1000 * 60 * 60 * 144),
+    },
+  }).then((article) => {
+    console.log(article);
+  });
+});
+
+automatedDeletion;

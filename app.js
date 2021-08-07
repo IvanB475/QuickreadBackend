@@ -6,6 +6,8 @@ const sourceAPI = require("./sources/sourceAPI");
 require("dotenv").config();
 const helmet = require("helmet");
 
+const IP = process.env.IP || 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.disable("x-powered-by");
